@@ -7,6 +7,8 @@ namespace MyProject.DanhMuc.Staffs
 {
     public interface IStaffAppService
     {
+        Task<PagedResultDto<StaffForView>> GetAllAsync(StaffGetAllInputSto input);
+
         Task<int> CreateOrEdit(StaffCreateInput input);
 
         Task<StaffCreateInput> GetForEditAsync(EntityDto input);

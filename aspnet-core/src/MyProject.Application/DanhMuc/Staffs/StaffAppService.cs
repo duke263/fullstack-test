@@ -29,6 +29,36 @@
             this.appFolders = appFolders;
         }
 
+        public async Task<PagedResultDto<StaffForView>> GetAllAsync(StaffGetAllInputSto input)
+        {
+            try
+            {
+                var filter = this.staffRepository.GetAll()
+                         .WhereIf(input != null && !string.IsNullOrEmpty(input.Keyword), e => e.Ma.Contains(input.Keyword) || e.Name.Contains(input.Keyword));
+                var totalCount = await filter.CountAsync();
+                var query = from o in filter
+                            select new StaffForView()
+                            {
+                                Staff = this.ObjectMapper.Map<StaffSto>(o),
+                                //                TrangThai = o.DropdownSingle != null && GlobalModel.TrangThaiHieuLucSorted.ContainsKey((int)o.DropdownSingle) ? GlobalModel.TrangThaiHieuLucSorted[(int)o.DropdownSingle] : string.Empty,
+                                //                TrangThaiDuyet = o.AutoCompleteSingle != null && GlobalModel.TrangThaiDuyetSorted.ContainsKey((int)o.AutoCompleteSingle) ? GlobalModel.TrangThaiDuyetSorted[(int)o.AutoCompleteSingle] : string.Empty,
+                            };
+                var items = query.PageBy(input).ToList();
+                return new PagedResultDto<StaffForView>
+                {
+                    TotalCount = totalCount,
+                    Items = items,
+                };
+
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+            
+        }
+
         /// <summary>
         /// Kiểm tra thêm mới hay cập nhật.
         /// </summary>
