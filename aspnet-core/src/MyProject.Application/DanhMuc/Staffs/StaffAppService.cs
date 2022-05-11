@@ -65,45 +65,65 @@
         /// <param name="input">Đầu vào.</param>
         public async Task<int> CreateOrEdit(StaffCreateInput input)
         {
-            // check null input
-            if (input == null)
+            try
             {
-                throw new UserFriendlyException(StringResources.NullParameter);
+                // check null input
+                if (input == null)
+                {
+                    throw new UserFriendlyException(StringResources.NullParameter);
+                }
+
+                input.Ma = GlobalFunction.RegexFormat(input.Ma);
+                input.Name = GlobalFunction.RegexFormat(input.Name);
+                input.Address = GlobalFunction.RegexFormat(input.Address);
+                input.Email = GlobalFunction.RegexFormat(input.Email);
+
+                if (this.CheckExist(input.Ma, input.Id))
+                {
+                    return 1;
+                }
+
+                // nếu là thêm mới
+                if (input.Id == null || input.Id == 0)
+                {
+                    await this.Create(input);
+                }
+                else
+                {
+                    // là cập nhật
+                    await this.Update(input);
+                }
+
+                return 0;
+
             }
-
-            input.Ma = GlobalFunction.RegexFormat(input.Ma);
-            input.Name = GlobalFunction.RegexFormat(input.Name);
-            input.Address = GlobalFunction.RegexFormat(input.Address);
-            input.Email = GlobalFunction.RegexFormat(input.Email);
-
-            if (this.CheckExist(input.Ma, input.Id))
+            catch (Exception e)
             {
-                return 1;
-            }
 
-            // nếu là thêm mới
-            if (input.Id == null)
-            {
-                await this.Create(input);
+                throw e;
             }
-            else
-            {
-                // là cập nhật
-                await this.Update(input);
-            }
-
-            return 0;
         }
 
         public async Task<StaffCreateInput> GetForEditAsync(EntityDto input)
         {
-            if (input == null)
+            try
             {
-                throw new UserFriendlyException(StringResources.NullParameter);
+
+                if (input == null)
+                {
+                    throw new UserFriendlyException(StringResources.NullParameter);
+                }
+
+                var staff = this.staffRepository.GetAllIncluding(e => e.ListStaffFile).First(e => e.Id == (int)input.Id);
+                var edit = this.ObjectMapper.Map<StaffCreateInput>(staff);
+                return await Task.FromResult(edit);
+
             }
-            //var staff = this.staffRepository.GetAllIncluding(e => e.ListDemoFile).First(e => e.Id == (int)input.Id);
-            //var edit = this.ObjectMapper.Map<StaffCreateInput>(staff);
-            return await Task.FromResult(new StaffCreateInput());
+            catch (Exception e)
+            {
+
+                throw e;
+            }
         }
 
         public async Task Delete(EntityDto input)

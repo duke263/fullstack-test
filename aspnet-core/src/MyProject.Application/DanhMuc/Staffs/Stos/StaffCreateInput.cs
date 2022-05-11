@@ -16,6 +16,6 @@ namespace MyProject.DanhMuc.Staffs.Stos
 
         public string Email { get; set; }
 
-        public List<Staff_File> ListStaffFile { get; set; }
+        //public List<Staff_File> ListStaffFile { get; set; }
     }
 }
