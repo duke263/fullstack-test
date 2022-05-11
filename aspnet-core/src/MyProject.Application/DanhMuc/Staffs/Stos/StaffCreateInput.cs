@@ -1,7 +1,7 @@
-﻿using Abp.Application.Services.Dto;
+﻿using System.Collections.Generic;
+using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
 using DbEntities;
-using System.Collections.Generic;
 
 namespace MyProject.DanhMuc.Staffs.Stos
 {
@@ -16,6 +16,6 @@ namespace MyProject.DanhMuc.Staffs.Stos
 
         public string Email { get; set; }
 
-        //public List<Staff_File> ListStaffFile { get; set; }
+        // public List<Staff_File> ListStaffFile { get; set; }
     }
 }

@@ -40,7 +40,8 @@
                             select new StaffForView()
                             {
                                 Staff = this.ObjectMapper.Map<StaffSto>(o),
-                                //                TrangThai = o.DropdownSingle != null && GlobalModel.TrangThaiHieuLucSorted.ContainsKey((int)o.DropdownSingle) ? GlobalModel.TrangThaiHieuLucSorted[(int)o.DropdownSingle] : string.Empty,
+
+                                // TrangThai = o.DropdownSingle != null && GlobalModel.TrangThaiHieuLucSorted.ContainsKey((int)o.DropdownSingle) ? GlobalModel.TrangThaiHieuLucSorted[(int)o.DropdownSingle] : string.Empty,
                                 //                TrangThaiDuyet = o.AutoCompleteSingle != null && GlobalModel.TrangThaiDuyetSorted.ContainsKey((int)o.AutoCompleteSingle) ? GlobalModel.TrangThaiDuyetSorted[(int)o.AutoCompleteSingle] : string.Empty,
                             };
                 var items = query.PageBy(input).ToList();
@@ -49,14 +50,11 @@
                     TotalCount = totalCount,
                     Items = items,
                 };
-
             }
             catch (Exception e)
             {
-
                 throw e;
             }
-            
         }
 
         /// <summary>
@@ -95,11 +93,9 @@
                 }
 
                 return 0;
-
             }
             catch (Exception e)
             {
-
                 throw e;
             }
         }
@@ -108,20 +104,17 @@
         {
             try
             {
-
                 if (input == null)
                 {
                     throw new UserFriendlyException(StringResources.NullParameter);
                 }
 
-                var staff = this.staffRepository.GetAllIncluding(e => e.ListStaffFile).First(e => e.Id == (int)input.Id);
+                var staff = this.staffRepository.GetAll().First(e => e.Id == (int)input.Id);
                 var edit = this.ObjectMapper.Map<StaffCreateInput>(staff);
                 return await Task.FromResult(edit);
-
             }
             catch (Exception e)
             {
-
                 throw e;
             }
         }
@@ -132,7 +125,6 @@
             {
                 throw new UserFriendlyException(StringResources.NullParameter);
             }
-            
 
             await this.staffRepository.DeleteAsync(input.Id);
         }
