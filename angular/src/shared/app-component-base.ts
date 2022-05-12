@@ -36,7 +36,7 @@ export abstract class AppComponentBase {
     paginator = true;
     showCurrentPageReport = true;
     paginatorRows = 20; // Số dòng hiển thị mặc định 1 page
-    rowsPerPageOptions = [20, 50, 100, 250]; // Chọn số record trong 1 page
+    rowsPerPageOptions = [10, 20, 50, 100, 250]; // Chọn số record trong 1 page
     subHeight = 226; // thông số tính scrollHeight
     scrollHeight = '600px';  // độ rộng để table cuộn tùy theo màn hình
     khongCoDuLieu = 'Không có dữ liệu';
