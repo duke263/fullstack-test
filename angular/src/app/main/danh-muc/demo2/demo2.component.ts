@@ -68,56 +68,56 @@ export class Demo2Component extends AppComponentBase implements OnInit {
 
   }
 
-  // createDemo2(id?: number) {
-  //   this._showCreateDemo2OrEditDemo2Component(id);
-  // }
+  createDemo2(id?: number) {
+    this._showCreateDemo2OrEditDemo2Component(id);
+  }
 
-  // viewDemo2(id?: number) {
-  //   this._showCreateDemo2OrEditDemo2Component(id, true);
-  // }
-
-
+  viewDemo2(id?: number) {
+    this._showCreateDemo2OrEditDemo2Component(id, true);
+  }
 
 
-  // protected _deletaDemo2(demo2: StaffSto) {
-  //   this.swal.file({
-  //     title: 'Bạn có chắc chắn không?',
-  //     text: 'ID ' + demo2.ma + ' sẽ bị xóa!',
-  //     icon: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonColor: this.confirmButtonColor,
-  //     cancelButtonColor: this.cancelButtonColor,
-  //     cancelButtonText: this.cancelButtonText,
-  //     confirmButtonText: this.confirmButtonText
-  //   }).then((result) => {
-  //     if (result.value) {
-  //       this._staffService.delete(this.staffs.id).subscribe(() => {
-  //         this.showDeleteMessage();
-  //         this.getDataPage();
-  //       });
-  //     }
-  //   });
-  // }
 
-  // private _showCreateDemo2OrEditDemo2Component (id?: number, isView = false): void
-  // {
-  //   //coppy
-  //   let createOrEditUserDialog: BsModalRef;
-  //   createOrEditUserDialog = this._modalService.show(
-  //     CreateDemo2OrEditDemo2Component,
-  //     {
-  //       class: 'modal-xl',
-  //       ignoreBackdropClick: true,
-  //       initialState: {
-  //         id,
-  //         isView,
-  //       },
-  //     }
-  //   );
 
-  //   // ouput emit
-  //   createOrEditUserDialog.content.onSave.subscribe(() => {
-  //     this.getDataPage();
-  //   });
-  // }
+  protected _deletaDemo2(staff: StaffSto) {
+    this.swal.file({
+      title: 'Bạn có chắc chắn không?',
+      text: 'ID ' + staff.id + ' sẽ bị xóa!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: this.confirmButtonColor,
+      cancelButtonColor: this.cancelButtonColor,
+      cancelButtonText: this.cancelButtonText,
+      confirmButtonText: this.confirmButtonText
+    }).then((result) => {
+      if (result.value) {
+        this._staffService.delete(staff.id).subscribe(() => {
+          this.showDeleteMessage();
+          this.getDataPage();
+        });
+      }
+    });
+  }
+
+  private _showCreateDemo2OrEditDemo2Component (id?: number, isView = false): void
+  {
+    //coppy
+    let createOrEditUserDialog: BsModalRef;
+    createOrEditUserDialog = this._modalService.show(
+      CreateDemo2OrEditDemo2Component,
+      {
+        class: 'modal-xl',
+        ignoreBackdropClick: true,
+        initialState: {
+          id,
+          isView,
+        },
+      }
+    );
+
+    // ouput emit
+    createOrEditUserDialog.content.onSave.subscribe(() => {
+      this.getDataPage();
+    });
+  }
 }

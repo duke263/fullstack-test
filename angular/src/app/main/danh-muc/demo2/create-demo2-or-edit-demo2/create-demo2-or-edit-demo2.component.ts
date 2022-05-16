@@ -18,6 +18,7 @@ import { HttpClient } from '@angular/common/http';
 import { FileDownloadService } from '@shared/file-download.service';
 import { AppComponentBase } from '@shared/app-component-base';
 import { AbpValidationError } from '@shared/components/validation/abp-validation.api';
+import { createInput } from '@angular/compiler/src/core';
 const URL = AppConsts.remoteServiceBaseUrl + '/api/Upload/';
 @Component({
   templateUrl: './create-demo2-or-edit-demo2.component.html',
@@ -27,7 +28,8 @@ export class CreateDemo2OrEditDemo2Component extends AppComponentBase implements
   form : FormGroup;
   saving = false;
   isEdit = false;
-  staffs: LookupTableDto[] = [];
+  staffs = new StaffCreateInput();
+  staff: LookupTableDto[] = [];
   arrTrangThaiDuyet: LookupTableDto[] = [];
   arrTrangHieuLuc: LookupTableDto[] = [];
   staffSto: StaffCreateInput = new StaffCreateInput();
@@ -61,11 +63,36 @@ export class CreateDemo2OrEditDemo2Component extends AppComponentBase implements
 
   khoiTaoForm() {
     this.form = this._fb.group({
-      Ma: '',
-      Name: '',
-      Address: '',
-      Email:'',
+      Ma: ['', Validators.required],
+      Name: ['', Validators.required],
+      Address: ['', Validators.required],
+      Email:['', Validators.required],
     });
   }
 
+  save(): void {
+    if (CommonComponent.getControlErr(this.form) === '') {
+      this.saving = true;
+      this._getValueForSave();
+      if (this.staffs.name.toLocaleLowerCase() === 'admin') {
+        this.showSwalAlertMessage('Ten không được trùng!', 'error');
+        this.saving = false;
+      } else {
+              this._staffService
+                .createOrEdit(this.staffs).subscribe(() => {
+                  this.showCreateMessage();
+                  this.bsModalRef.hide();
+                  this.onSave.emit();
+                });
+            }
+      }
+    }
+
+    private _getValueForSave() {
+      this.staffs.id = this.form.controls.id.value;
+      this.staffs.ma = this.form.controls.ma.value;
+      this.staffs.name = this.form.controls.name.value;
+      this.staffs.address = this.form.controls.adress.value;
+      this.staffs.email = this.form.controls.email.value;
+    }
 }
