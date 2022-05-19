@@ -23,17 +23,20 @@
         private readonly IPasswordHasher<User> passwordHasher;
         private readonly IRepository<Demo> demoRepository;
         private readonly IRepository<TreeView> treeViewRepository;
+        private readonly IRepository<Staff> staffRepository;
 
         public LookupTableAppService(
             LogInManager logInManager,
             IPasswordHasher<User> passwordHasher,
             IRepository<Demo> demoRepository,
-            IRepository<TreeView> treeViewRepository)
+            IRepository<TreeView> treeViewRepository,
+            IRepository<Staff> staffRepository)
         {
             this.logInManager = logInManager;
             this.passwordHasher = passwordHasher;
             this.demoRepository = demoRepository;
             this.treeViewRepository = treeViewRepository;
+            this.staffRepository = staffRepository;
         }
 
         public async Task<List<LookupTableDto<string>>> GetAllStringLookupTableAsync()
@@ -71,6 +74,12 @@
         public async Task<List<LookupTableDto>> GetAllDemoAsync()
         {
             var result = this.demoRepository.GetAll().Select(e => new LookupTableDto() { Id = e.Id, DisplayName = e.Ma }).ToList();
+            return await Task.FromResult(result);
+        }
+
+        public async Task<List<LookupTableDto>> GetAllStaffAsync()
+        {
+            var result = this.staffRepository.GetAll().Select(e => new LookupTableDto() { Id = e.Id, DisplayName = e.Ma }).ToList();
             return await Task.FromResult(result);
         }
 

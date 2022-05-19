@@ -1,5 +1,5 @@
-<form [formGroup]="form" class="form-horizontal" autocomplete="off" #createUserModal="ngForm" (ngSubmit)="save()">
-    <abp-modal-header [title]="'Thêm mới Nhân viên'" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+<form [formGroup]="form" class="form-horizontal" autocomplete="off" #editUserModal="ngForm" (ngSubmit)="save()">
+    <abp-modal-header [title]="isView?'Xem chi tiết: '+ staff.name: 'Cập nhật: '+ staff.name" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
     <div class="modal-body fixed-modal-height">
         <p-tabView>
             <p-tabPanel header="Thông tin">
@@ -38,9 +38,7 @@
                     </div>
                 </div>
             </p-tabPanel>
-
-
         </p-tabView>
     </div>
-    <abp-modal-footer [cancelDisabled]="saving" (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+    <abp-modal-footer [cancelDisabled]="saving" [saveHidden]="isView" [cancelLabel]="isView?'Đóng':'Hủy'" (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
 </form>

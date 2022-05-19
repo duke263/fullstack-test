@@ -17,6 +17,8 @@
 
         Task<List<LookupTableDto>> GetAllDemoAsync();
 
+        Task<List<LookupTableDto>> GetAllStaffAsync();
+
         Task<bool> ChangePassword(ChangePasswordDto input);
 
         Task<List<TreeviewItemDto>> GetAllDropDownTreeViewAsync();

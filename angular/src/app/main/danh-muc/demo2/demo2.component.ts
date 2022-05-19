@@ -1,6 +1,6 @@
 import { Component, OnInit, Injector, ViewChild } from '@angular/core';
 import { FileDownloadService } from '../../../../shared/file-download.service';
-import { StaffServiceProxy, StaffForView, DemoGetAllInputDto, LookupTableDto } from './../../../../shared/service-proxies/service-proxies';
+import { StaffServiceProxy, StaffForView, LookupTableDto } from './../../../../shared/service-proxies/service-proxies';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { FormGroup, FormControl } from '@angular/forms';
 import { StaffSto } from '@shared/service-proxies/service-proxies';
@@ -10,6 +10,7 @@ import { Table } from 'primeng/table';
 import { finalize } from 'rxjs/operators';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CreateDemo2OrEditDemo2Component } from './create-demo2-or-edit-demo2/create-demo2-or-edit-demo2.component';
+import { EditDemo2Component } from './edit-demo2/edit-demo2/edit-demo2.component';
 import { HttpClient } from '@angular/common/http';
 import { AppConsts } from '@shared/AppConsts';
 const URL = AppConsts.remoteServiceBaseUrl + '/api/Upload/DemoUpload';
@@ -25,14 +26,10 @@ export class Demo2Component extends AppComponentBase implements OnInit {
   advancedFiltersVisible = false;
   isActive = false;
   loading = true;
-  exporting = false;
+  staffs: StaffSto[] = [];
   staff: StaffForView[] = [];
-  input: DemoGetAllInputDto;
+  // input: DemoGetAllInputDto;
   totalCount = 0;
-  config = {
-    animated: false
-  };
-
   constructor(
     injector: Injector,
     private _modalService: BsModalService,
@@ -54,33 +51,41 @@ export class Demo2Component extends AppComponentBase implements OnInit {
   }
 
   getDataPage(lazyLoad?: LazyLoadEvent) {
+    // this.first = 0;
     this.loading = true;
-    this._staffService.getAll(
-      this.keyword,
+    this._staffService
+    .getAll(
+      this.keyword || undefined,
+      // this.getSortField(this.table),
       lazyLoad ? lazyLoad.first : this.table.first,
       lazyLoad ? lazyLoad.rows : this.table.rows,
-    ).pipe(finalize(() => { this.loading = false; }))
-      .subscribe(result => {
-        this.staff = result.items;
+    ).pipe(finalize(() => {
+      this.loading = false;
+    })).subscribe(result => {
+        this.staff =  result.items;
         this.totalCount = result.totalCount;
-        console.log(66 , this.staff);
+        console.log(66 , this.staffs);
       });
 
   }
 
-  createDemo2(id?: number) {
-    this._showCreateDemo2OrEditDemo2Component(id);
+  createDemo2(): void {
+    this._showCreateDemo2OrEditDemo2Component();
   }
 
-  viewDemo2(id?: number) {
-    this._showCreateDemo2OrEditDemo2Component(id, true);
+  editDemo2(staff: StaffSto): void {
+    this._showCreateDemo2OrEditDemo2Component(staff.id);
+  }
+
+  viewDemo2(staff: StaffSto): void {
+    this._showCreateDemo2OrEditDemo2Component(staff.id, true);
+    console.log(75 , staff.id);
   }
 
 
-
-
-  protected _deletaDemo2(staff: StaffSto) {
-    this.swal.file({
+ deleteDemo2(staff: StaffSto) {
+   debugger;
+    this.swal.fire({
       title: 'Bạn có chắc chắn không?',
       text: 'ID ' + staff.id + ' sẽ bị xóa!',
       icon: 'warning',
@@ -102,21 +107,29 @@ export class Demo2Component extends AppComponentBase implements OnInit {
   private _showCreateDemo2OrEditDemo2Component (id?: number, isView = false): void
   {
     //coppy
-    let createOrEditUserDialog: BsModalRef;
-    createOrEditUserDialog = this._modalService.show(
-      CreateDemo2OrEditDemo2Component,
-      {
-        class: 'modal-xl',
-        ignoreBackdropClick: true,
-        initialState: {
-          id,
-          isView,
-        },
-      }
-    );
+    let createOrEditStaff: BsModalRef;
+    if (!id) {
+      createOrEditStaff = this._modalService.show(
+        CreateDemo2OrEditDemo2Component,
+        {
+          class: 'modal-xl',
+        }
+      );
+    }else {
+      createOrEditStaff = this._modalService.show(
+        EditDemo2Component,
+        {
+          class: 'modal-xl',
+          initialState: {
+            id: id,
+            isView,
+          },
+        }
+      );
+    }
 
     // ouput emit
-    createOrEditUserDialog.content.onSave.subscribe(() => {
+    createOrEditStaff.content.onSave.subscribe(() => {
       this.getDataPage();
     });
   }

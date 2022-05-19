@@ -16,6 +16,6 @@
 
         public string Email { get; set; }
 
-        //public virtual ICollection<Staff_File> ListStaffFile { get; set; }
+        // public virtual ICollection<Staff_File> ListStaffFile { get; set; }
     }
 }

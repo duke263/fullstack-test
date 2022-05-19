@@ -1,7 +1,7 @@
-﻿using Abp.Application.Services.Dto;
+﻿using System;
+using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
 using DbEntities;
-using System;
 
 namespace MyProject.DanhMuc.Staffs.Stos
 {

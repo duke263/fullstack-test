@@ -1,5 +1,5 @@
 <div [@routerTransition]>
-    <section class="content-header" id="tesst">
+    <section class="content-header">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-6">
@@ -24,13 +24,12 @@
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
-                        <input type="text" class="form-control" name="keyword" [placeholder]="'Nhập từ khóa...'"
-                            [(ngModel)]="keyword" (key.enter)="getDataPage()" pTooltip="Nhập chữ vào đây"
+                        <input type="text" class="form-control" name="keyword" [placeholder]="'Nhập mã, họ tên nhân viên, email' | localize" [(ngModel)]="keyword" (keyup.enter)="getDataPage()"
                             tooltipPosition="top" />
                     </div>
                 </div>
                 <div>
-                    <p-table #dt [value]="staff" [lazy]="true" (onLazyLoad)="getDataPage($event)"
+                    <p-table #dt [value]="staff" [lazy]="true" [(first)]="first" (onLazyLoad)="getDataPage($event)"
                         [paginator]="paginator" [loading]="loading" [showCurrentPageReport]="showCurrentPageReport"
                         currentPageReportTemplate="Hiển thị: {first}-{last} / {totalRecords}" [rows]="paginatorRows"
                         [totalRecords]="totalCount" [rowsPerPageOptions]="rowsPerPageOptions" [scrollable]="scrollable"
@@ -38,11 +37,21 @@
                         <ng-template pTemplate="header">
                             <tr>
                                 <th class="width-30"></th>
-                                <th class="width-50">ID</th>
-                                <th class="width-150">Mã</th>
-                                <th class="width-150">Name</th>
-                                <th class="width-150">Address</th>
-                                <th class="width-150">Email</th>
+                                <th class="width-50" pSortableColumn="id">ID
+                                    <p-sortIcon field="id"></p-sortIcon>
+                                </th>
+                                <th class="width-150" pSortableColumn="ma">Mã
+                                    <p-sortIcon field="ma"></p-sortIcon>
+                                </th>
+                                <th class="width-150" pSortableColumn="name" >Name
+                                    <p-sortIcon field="name"></p-sortIcon>
+                                </th>
+                                <th class="width-150" pSortableColumn="address">Address
+                                    <p-sortIcon field="address"></p-sortIcon>
+                                </th>
+                                <th class="width-150" pSortableColumn="email">Email
+                                    <p-sortIcon field="email"></p-sortIcon>
+                                </th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-record>
@@ -55,9 +64,9 @@
                                             <i class="fas fa-ellipsis-v"></i>
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" (click)="viewDemo2(record.staff.id)">Xem</a>
-                                            <a class="dropdown-item" (click)="createDemo2(record.staff.id)">Cập nhật</a>
-                                            <a class="dropdown-item" (click)="_deleteDemo2(record.staff)">Xóa</a>
+                                            <a class="dropdown-item" (click)="viewDemo2(record.staff,true)">Xem</a>
+                                            <a class="dropdown-item" (click)="editDemo2(record.staff)">Cập nhật</a>
+                                            <a class="dropdown-item" (click)="deleteDemo2(record.staff)">Xóa</a>
                                         </div>
                                     </div>
                                 </td>
