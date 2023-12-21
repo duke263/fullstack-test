@@ -3,12 +3,12 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-6">
-                    <h1>Quản lý Người dùng</h1>
+                    <h1>User Master</h1>
                 </div>
                 <div class="col-6 text-right">
                     <button type="button" class="btn btn-primary m-r-5" (click)="createUser()">
                         <i class="fa fa-plus"></i>
-                        <span style="margin-left: 5px;">Thêm mới</span></button>
+                        <span style="margin-left: 5px;">Add</span></button>
                 </div>
             </div>
         </div>
@@ -23,28 +23,28 @@
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
-                        <input type="text" class="form-control" name="keyword" [placeholder]="'Nhập tên đăng nhập, họ tên người dùng, email, số điện thoại' | localize" [(ngModel)]="keyword" (keyup.enter)="getDataPage()" />
+                        <input type="text" class="form-control" name="keyword" [placeholder]="'Search for User Name, Full Name, Email' | localize" [(ngModel)]="keyword" (keyup.enter)="getDataPage()" />
                     </div>
                 </div>
                 <div>
-                    <p-table #dt [value]="users" [lazy]="true" [(first)]="first" (onLazyLoad)="getDataPage($event)" [paginator]="paginator" [loading]="loading" [showCurrentPageReport]="showCurrentPageReport" currentPageReportTemplate="{{totalCount==0?'':' Hiển thị: {first}-{last}/{totalRecords}'}}"
+                    <p-table #dt [value]="users" [lazy]="true" [(first)]="first" (onLazyLoad)="getDataPage($event)" [paginator]="paginator" [loading]="loading" [showCurrentPageReport]="showCurrentPageReport" currentPageReportTemplate="{{totalCount==0?'':' Showing {first} to {last} of {totalRecords} entries'}}"
                         [rows]="paginatorRows" [totalRecords]="totalCount" [rowsPerPageOptions]="rowsPerPageOptions" [scrollable]="scrollable" scrollHeight="{{scrollHeight}}">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th class="width-30"></th>
-                                <th class="width-150" pSortableColumn="userName">Tên đăng nhập
+                                <th class="width-150" pSortableColumn="userName">User Name
                                     <p-sortIcon field="userName"></p-sortIcon>
                                 </th>
-                                <th class="width-150" pSortableColumn="name">Họ tên
+                                <th class="width-150" pSortableColumn="name">Full Name
                                     <p-sortIcon field="name"></p-sortIcon>
                                 </th>
-                                <th class="width-200" pSortableColumn="emailAddress">Địa chỉ Email
+                                <th class="width-200" pSortableColumn="emailAddress">Email
                                     <p-sortIcon field="emailAddress"></p-sortIcon>
                                 </th>
-                                <th class="width-100" pSortableColumn="phoneNumber">SĐT
+                                <th class="width-100" pSortableColumn="phoneNumber">Phone Number
                                     <p-sortIcon field="phoneNumber"></p-sortIcon>
                                 </th>
-                                <th class="width-100" pSortableColumn="isActive">Kích hoạt
+                                <th class="width-100" pSortableColumn="isActive">Status
                                     <p-sortIcon field="isActive"></p-sortIcon>
                                 </th>
                             </tr>
@@ -57,13 +57,11 @@
                                             <i class="fas fa-ellipsis-v"></i>
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" (click)="viewUser(record,true)">Xem</a>
-                                            <a class="dropdown-item" (click)="editUser(record)">Cập
-                                                nhật</a>
-                                            <a class="dropdown-item" (click)="resetPassword(record)">Khôi phục mật
-                                                khẩu</a>
-                                            <a class="dropdown-item" (click)="updateRole(record)">Phân quyền</a>
-                                            <a class="dropdown-item" (click)="delete(record)">Xóa</a>
+                                            <a class="dropdown-item" (click)="viewUser(record,true)">View</a>
+                                            <a class="dropdown-item" (click)="editUser(record)">Edit</a>
+                                            <a class="dropdown-item" (click)="resetPassword(record)">Reset password</a>
+                                            <a class="dropdown-item" (click)="updateRole(record)">Permission</a>
+                                            <a class="dropdown-item" (click)="delete(record)">Delete</a>
                                         </div>
                                     </div>
                                 </td>

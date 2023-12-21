@@ -3,11 +3,11 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-6">
-                    <h1>Lịch sử truy cập Người dùng</h1>
+                    <h1>Log Master</h1>
                 </div>
                 <div class="col-6 text-right">
                     <button type="button" class="btn btn-success m-r-5" [buttonBusy]="exporting" (click)="exportToExcelAuditLogs()"><i class="fa fa-download"></i>
-                        <span style="margin-left: 5px;">Xuất Excel</span></button>
+                        <span style="margin-left: 5px;">Export Excel</span></button>
                 </div>
             </div>
         </div>
@@ -22,7 +22,7 @@
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
-                        <input type="text" class="form-control" name="keyword" [placeholder]="'Nhập tên người dùng'" [(ngModel)]="usernameAuditLog" (keyup.enter)="getAuditLogs()" />
+                        <input type="text" class="form-control" name="keyword" [placeholder]="'Search for User Name'" [(ngModel)]="usernameAuditLog" (keyup.enter)="getAuditLogs()" />
                     </div>
                 </div>
                 <div class="card-body">
@@ -30,7 +30,7 @@
                         <div class="row ui-fluid">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <dft-label-validation [title]="'Dịch vụ'">
+                                    <dft-label-validation [title]="'Module'">
                                     </dft-label-validation>
                                     <p-dropdown [(ngModel)]="serviceName" [options]="arrService" [placeholder]="dropdownPlaceholder" optionLabel="displayName" [showClear]="true" [filter]="true" resetFilterOnHide="true" name="serviceName">
                                     </p-dropdown>
@@ -38,7 +38,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <dft-label-validation [title]="'Thời gian'">
+                                    <dft-label-validation [title]="'From Date - To Date'">
                                     </dft-label-validation>
                                     <p-calendar [(ngModel)]="rangeDates" selectionMode="range" [dateFormat]="dateFormatInput" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" name="rangeDates">
                                     </p-calendar>
@@ -48,37 +48,37 @@
                     </form>
                 </div>
                 <div>
-                    <p-table #dt [value]="primengTableHelperAuditLogs" [(first)]="first" [lazy]="true" (onLazyLoad)="getAuditLogs($event)" [paginator]="paginator" [loading]="loading" [showCurrentPageReport]="showCurrentPageReport" currentPageReportTemplate="{{totalCount==0?'':' Hiển thị: {first}-{last}/{totalRecords}'}}"
+                    <p-table #dt [value]="primengTableHelperAuditLogs" [(first)]="first" [lazy]="true" (onLazyLoad)="getAuditLogs($event)" [paginator]="paginator" [loading]="loading" [showCurrentPageReport]="showCurrentPageReport" currentPageReportTemplate="{{totalCount==0?'':' Showing {first} to {last} of {totalRecords} entries'}}"
                         [rows]="paginatorRows" [totalRecords]="totalCount" [rowsPerPageOptions]="rowsPerPageOptions" [scrollable]="scrollable" scrollHeight="{{scrollHeight}}">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th style="width:75px"></th>
                                 <th style="width: 150px" pSortableColumn="executionTime">
-                                    Thời gian
+                                    Time
                                     <p-sortIcon field="executionTime"></p-sortIcon>
                                 </th>
                                 <th style="width: 150px" pSortableColumn="userName">
-                                    Tên người dùng
+                                    User Name
                                     <p-sortIcon field="userName"></p-sortIcon>
                                 </th>
                                 <th style="width: 250px" pSortableColumn="serviceName">
-                                    Dịch vụ
+                                    Module
                                     <p-sortIcon field="serviceName"></p-sortIcon>
                                 </th>
                                 <th style="width: 150px" pSortableColumn="methodName">
-                                    Hành động
+                                    Action
                                     <p-sortIcon field="methodName"></p-sortIcon>
                                 </th>
                                 <th style="width: 180px" pSortableColumn="executionDuration">
-                                    Thời gian thực thi
+                                    Execution time
                                     <p-sortIcon field="executionDuration"></p-sortIcon>
                                 </th>
                                 <th style="width: 150px" pSortableColumn="clientIpAddress">
-                                    Địa chỉ IP
+                                    IP address
                                     <p-sortIcon field="clientIpAddress"></p-sortIcon>
                                 </th>
                                 <th style="width: 150px" pSortableColumn="browserInfo">
-                                    Trình duyệt
+                                    Browser
                                     <p-sortIcon field="browserInfo"></p-sortIcon>
                                 </th>
                             </tr>

@@ -64,7 +64,6 @@ export class Demo2Component extends AppComponentBase implements OnInit {
     })).subscribe(result => {
         this.staff =  result.items;
         this.totalCount = result.totalCount;
-        console.log(66 , this.staffs);
       });
 
   }
@@ -84,10 +83,9 @@ export class Demo2Component extends AppComponentBase implements OnInit {
 
 
  deleteDemo2(staff: StaffSto) {
-   debugger;
     this.swal.fire({
       title: 'Bạn có chắc chắn không?',
-      text: 'ID ' + staff.id + ' sẽ bị xóa!',
+      text: 'ID ' + staff.id + ' sẽ bị Delete!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: this.confirmButtonColor,
@@ -106,7 +104,7 @@ export class Demo2Component extends AppComponentBase implements OnInit {
 
   private _showCreateDemo2OrEditDemo2Component (id?: number, isView = false): void
   {
-    //coppy
+    // coppy
     let createOrEditStaff: BsModalRef;
     if (!id) {
       createOrEditStaff = this._modalService.show(

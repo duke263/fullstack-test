@@ -1,0 +1,44 @@
+<form [formGroup]="form" class="form-horizontal" autocomplete="off" #createUserModal="ngForm" (ngSubmit)="save()">
+    <abp-modal-header [title]="isView?'View: '+ inputDto.productName: 'Edit: '+ inputDto.productName" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+    <div class="modal-body fixed-modal-height">
+        <p-tabView>
+            <p-tabPanel header="Infomation">
+                <div class="row ui-fluid">
+                    <div class="col-md-6">
+                        <dft-label-validation [control]="form.get('productName')" [title]="'Product Name *'">
+                        </dft-label-validation>
+                        <input formControlName="productName" type="text" class="form-control" name="productName" id="productName"
+                        />
+                        <dft-validation [control]="form.get('productName')"></dft-validation>
+                    </div>
+                    <div class="col-md-6">
+                        <dft-label-validation [control]="form.get('price')" [title]="'Price *'">
+                        </dft-label-validation>
+                        <input decimalProduct formControlName="price" type="text" class="form-control" name="price" id="price" pInputText/>
+                        <dft-validation [control]="form.get('price')"></dft-validation>
+                    </div>
+                </div>
+
+                <div class="row ui-fluid">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <dft-label-validation [control]="form.get('category')" [title]="'Category *'">
+                            </dft-label-validation>
+                            <input formControlName="category" class="form-control" name="category" />
+                            <dft-validation [control]="form.get('category')"></dft-validation>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <dft-label-validation [control]="form.get('description')" [title]="'Description'">
+                        </dft-label-validation>
+                        <input formControlName="description" type="text" class="form-control" name="description" id="description"
+                         />
+                    </div>
+                </div>
+            </p-tabPanel>
+
+
+        </p-tabView>
+    </div>
+    <abp-modal-footer [cancelDisabled]="saving" [saveHidden]="isView" [cancelLabel]="isView?'Close':'Cancel'" [saveDisabled]="form.invalid" (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+</form>

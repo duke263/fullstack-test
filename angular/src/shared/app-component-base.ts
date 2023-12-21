@@ -75,8 +75,8 @@ export abstract class AppComponentBase {
     // Dialog Delete Start
     confirmButtonColor = '#3085d6';
     cancelButtonColor = '#d33';
-    cancelButtonText = 'Hủy';
-    confirmButtonText = 'Xóa';
+    cancelButtonText = 'Cancel';
+    confirmButtonText = 'Delete';
     // Dialog Delete End
 
     first = 0;
@@ -127,19 +127,19 @@ export abstract class AppComponentBase {
     }
 
     showCreateMessage() {
-        this.notify.success("Thêm mới thành công!");
+        this.notify.success("Added successfully!");
     }
 
     showUpdateMessage() {
-        this.notify.success("Cập nhật thành công!");
+        this.notify.success("Updated successfully!");
     }
 
     showDeleteMessage() {
-        this.notify.success("Xóa thành công!");
+        this.notify.success("Deleted successfully!");
     }
 
     showUploadMessage() {
-        this.notify.success("Upload thành công!");
+        this.notify.success("Upload successfully!");
     }
 
     showNotifyMessage(message: string, type = 'success') {

@@ -80,11 +80,11 @@ export class UsersComponent extends AppComponentBase implements OnInit {
 
   protected delete(user: UserDto): void {
     if (user.lastLoginTime) {
-      this.showSwalAlertMessage('Người dùng đã đăng nhập, không được xóa!', 'error');
+      this.showSwalAlertMessage('Người dùng đã đăng nhập, không được Delete!', 'error');
     } else {
       this.swal.fire({
         title: 'Bạn chắc chắn không?',
-        text: 'Người dùng ' + user.name + ' sẽ bị xóa.',
+        text: 'Người dùng ' + user.name + ' sẽ bị Delete.',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: this.confirmButtonColor,

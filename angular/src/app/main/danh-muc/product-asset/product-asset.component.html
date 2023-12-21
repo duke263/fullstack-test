@@ -1,27 +1,27 @@
-<div [@routerTransition]>
-    <section class="content-header" id="tesst">
+<div>
+    <section class="content-header">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-6">
-                    <h1>Demo</h1>
+                    <h1>Product Master</h1>
                 </div>
                 <div class="col-6 text-right">
-                    <button type="button" class="btn btn-success m-r-5 m-t-5 width-130" (click)="importExcel()">
+                    <button type="button" class="btn btn-success m-r-5 m-t-5 width-140" (click)="importExcel()">
                         <i class="fa fa-upload"></i>
-                        <span styles="">Nhập Excel</span></button>
+                        <span style="margin-left: 5px;">Import Excel</span></button>
 
-                        <button type="button" class="btn btn-success m-r-5 m-t-5 width-130" [buttonBusy]="exporting"
+                        <button type="button" class="btn btn-success m-r-5 m-t-5 width-140" [buttonBusy]="exporting"
                         (click)="exportToExcel()"><i class="fa fa-download"></i>
                         <span style="margin-left: 5px;">Export Excel</span></button>
 
-                    <button type="button" class="btn btn-primary m-r-5 m-t-5 width-130" (click)="createDemo()">
+                    <button type="button" class="btn btn-primary m-r-5 m-t-5 width-130" (click)="createProduct()">
                         <i class="fa fa-plus"></i>
                         <span style="margin-left: 5px;">Add</span></button>
                 </div>
             </div>
         </div>
     </section>
-    <section class="content px-2">
+    <section class="context px-2">
         <div class="container-fluid">
             <div class="card m-0">
                 <div class="card-header">
@@ -31,13 +31,12 @@
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
-                        <input type="text" class="form-control" name="keyword" [placeholder]="'Nhập từ khóa...'"
-                            [(ngModel)]="keyword" (keyup.enter)="getDataPage()" pTooltip="Nhập chữ vào đây"
+                        <input type="text" class="form-control" name="keyword" [placeholder]="'Nhập mã, họ tên nhân viên, email' | localize" [(ngModel)]="keyword" (keyup.enter)="getDataPage()"
                             tooltipPosition="top" />
                     </div>
                 </div>
                 <div>
-                    <p-table #dt [value]="demos" [lazy]="true" (onLazyLoad)="getDataPage($event)"
+                    <p-table #dt [value]="records" [lazy]="true" [(first)]="first" (onLazyLoad)="getDataPage($event)"
                         [paginator]="paginator" [loading]="loading" [showCurrentPageReport]="showCurrentPageReport"
                         currentPageReportTemplate="Hiển thị: {first}-{last} / {totalRecords}" [rows]="paginatorRows"
                         [totalRecords]="totalCount" [rowsPerPageOptions]="rowsPerPageOptions" [scrollable]="scrollable"
@@ -45,12 +44,18 @@
                         <ng-template pTemplate="header">
                             <tr>
                                 <th class="width-30"></th>
-                                <th class="width-150">Mã</th>
-                                <th class="width-150">Tên</th>
-                                <th class="width-150">IntegerOnly</th>
-                                <th class="width-150">Decimal</th>
-                                <th class="width-150">Trạng thái</th>
-                                <th class="width-150">Trạng thái duyệt</th>
+                                <th class="width-150" pSortableColumn="productName">Product Name
+                                    <p-sortIcon field="productName"></p-sortIcon>
+                                </th>
+                                <th class="width-150" pSortableColumn="price" >Price
+                                    <p-sortIcon field="price"></p-sortIcon>
+                                </th>
+                                <th class="width-150" pSortableColumn="category">Category
+                                    <p-sortIcon field="category"></p-sortIcon>
+                                </th>
+                                <th class="width-150" pSortableColumn="description">Description
+                                    <p-sortIcon field="description"></p-sortIcon>
+                                </th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-record>
@@ -63,29 +68,21 @@
                                             <i class="fas fa-ellipsis-v"></i>
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" (click)="viewDemo(record.demo.id)">Xem</a>
-                                            <a class="dropdown-item" (click)="createDemo(record.demo.id)">Cập nhật</a>
-                                            <a class="dropdown-item" (click)="_deleteDemo(record.demo)">Delete</a>
+                                            <a class="dropdown-item" (click)="viewProduct(record.id,true)">View</a>
+                                            <a class="dropdown-item" (click)="editProduct(record.id)">Edit</a>
+                                            <a class="dropdown-item" (click)="deleteProduct(record)">Delete</a>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="width-150">{{ record.demo.ma | truncate }}</td>
-                                <td class="width-150">{{ record.demo.ten | truncate }}</td>
-                                <td class="width-150">{{ record.demo.integerOnly | number }}</td>
-                                <td class="width-150">{{ record.demo.decimal | number }}</td>
-                                <td class="width-150">
-                                    <span
-                                        [class]="'trang-thai hieu-luc-' + record.demo.dropdownSingle">{{record.trangThai}}</span>
-                                </td>
-                                <td class="width-150">
-                                    <span
-                                        [class]="'trang-thai duyet-' + record.demo.autoCompleteSingle">{{record.trangThaiDuyet}}</span>
-                                </td>
+                                <td class="width-150">{{ record.productName }}</td>
+                                <td class="width-150">{{ formatNumberWithCommas(record.price)  }}</td>
+                                <td class="width-150">{{ record.category }}</td>
+                                <td class="width-150">{{ record.description }}</td>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="emptymessage">
                             <tr>
-                                <td class="demo" colspan="8" style="text-align:left">{{khongCoDuLieu}}</td>
+                                <td class="staff" colspan="8" style="text-align:left">{{khongCoDuLieu}}</td>
                             </tr>
                         </ng-template>
                     </p-table>
@@ -94,3 +91,4 @@
         </div>
     </section>
 </div>
+

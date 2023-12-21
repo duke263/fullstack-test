@@ -6,6 +6,9 @@ import { CreateOrEditDemoDialogComponent } from './demo/create-or-edtit/create-o
 import { Demo2Component } from './demo2/demo2.component';
 import { CreateDemo2OrEditDemo2Component } from './demo2/create-demo2-or-edit-demo2/create-demo2-or-edit-demo2.component';
 import { EditDemo2Component } from './demo2/edit-demo2/edit-demo2/edit-demo2.component';
+import { ProductAssetComponent } from './product-asset/product-asset.component';
+import { CreateProductComponent } from './product-asset/create-product/create-product.component';
+import { EditProductComponent } from './product-asset/edit-product/edit-product.component';
 
 @NgModule({
     imports: [
@@ -18,6 +21,9 @@ import { EditDemo2Component } from './demo2/edit-demo2/edit-demo2/edit-demo2.com
         Demo2Component,
         CreateDemo2OrEditDemo2Component,
         EditDemo2Component,
+        ProductAssetComponent,
+        CreateProductComponent,
+        EditProductComponent,
     ],
 })
 export class DanhMucModule { }

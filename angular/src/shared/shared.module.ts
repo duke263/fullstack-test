@@ -68,6 +68,8 @@ import { MultipleSelectTreeComponent } from './dft/multiple-select-tree/multiple
 import { ChartModule } from 'primeng/chart';
 import { PermissionTreeComponent } from '@app/roles/lib/permission-tree.component';
 import { CheckBoxTreeComponent } from '@shared/dft/multiple-select-tree/lib/checkbox-tree-component';
+import { DecimalProductDirective } from './dft/directives/decimal-only-product.directive';
+
 @NgModule({
   imports: [
     ChartModule,
@@ -133,6 +135,7 @@ import { CheckBoxTreeComponent } from '@shared/dft/multiple-select-tree/lib/chec
     DisableControlDirective,
     PhoneNumberDirective,
     DisabledOnSelectorDirective,
+    DecimalProductDirective,
 
     // Pipe
     TienTePipe,
@@ -204,6 +207,8 @@ import { CheckBoxTreeComponent } from '@shared/dft/multiple-select-tree/lib/chec
     DisableControlDirective,
     PhoneNumberDirective,
     DisabledOnSelectorDirective,
+    DecimalProductDirective,
+
     // Pipe
     TienTePipe,
     TruncatePipe,

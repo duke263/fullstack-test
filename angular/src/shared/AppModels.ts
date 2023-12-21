@@ -46,7 +46,7 @@ export const TinhTrangSuDungTaiSanSorted = {
     7: "Mất",
     8: "Hỏng",
     9: "Thanh lý",
-    10: "Hủy",
+    10: "Cancel",
 };
 
 export const TrangThaiTaiSanHienThiSorted = {
@@ -60,7 +60,7 @@ export const TrangThaiTaiSanHienThiSorted = {
     7: "Mất" ,
     8: "Hỏng" ,
     9: "Thanh lý" ,
-    10: "Hủy" ,
+    10: "Cancel" ,
 };
 
 // Trạng thái sửa chữa,bảo dưỡng

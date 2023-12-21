@@ -43,6 +43,23 @@ export class ValidationComponent {
         }
     }
 
+    public static KtraKhoangTrang(control: AbstractControl) {
+        try {
+            // nếu k phai số trả về true
+            if (control.value != null) {
+                if (control.value.trim().length == 0) {
+                    control.setValue(control.value.trim());
+                    return { required: true };
+                } else {
+                    control.setValue(control.value.trimStart());
+                }
+            }
+            return null;
+        } catch (error) {
+
+        }
+    }
+
     @Input() control;
     constructor() { }
     get message() {
@@ -61,7 +78,7 @@ export class ValidationComponent {
 
     getErrorMessage(err) {
         const messages = {
-            'required': 'Đây là trường bắt buộc', // Đây là trường bắt buộc
+            'required': 'This field is required', // Đây là trường bắt buộc
             'isEndMin': 'Thời gian phải lớn hơn hoặc bằng ngày bắt đầu', // Thời gian phải lớn hơn hoặc bằng ngày bắt đầu
             'isStartMax': 'Thời gian phải nhỏ hơn hoặc bằng ngày kết thúc', // Thời gian phải nhỏ hơn hoặc bằng ngày kết thúc
             'isMax': 'Thời gian phải nhỏ hơn hoặc bằng ngày hiện tại',   // Thời gian phải nhỏ hơn hoặc bằng ngày hiện tại
@@ -76,8 +93,8 @@ export class ValidationComponent {
             'email': 'Email không đúng định dạng',
             'phone': 'SĐT không đúng định dạng',
             'url': 'URL không đúng định dạng',
-            'minlength': 'Không đúng định dạng',
-            'maxlength': 'Không đúng định dạng',
+            'minlength': "The min length is " + this.control?.errors?.['minlength']?.requiredLength + " characters",
+            'maxlength': "The max length is " + this.control?.errors?.['maxlength']?.requiredLength + " characters",
             'matKhauKhongKhop': 'Mật khẩu xác nhận chưa đúng!',
             'space': 'Không đúng định dạng',
         };

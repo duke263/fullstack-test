@@ -48,7 +48,7 @@ export class CreateDemo2OrEditDemo2Component extends AppComponentBase implements
     // ).subscribe(([stafff]) => {
     //   this.staff = stafff;
     //   if (!this.id) {
-    //     // Thêm mới
+    //     // Add
     //     this.staffs = new StaffCreateInput();
     //     this.isEdit = false;
     //   } else {

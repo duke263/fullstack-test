@@ -95,7 +95,7 @@ export class DemoComponent extends AppComponentBase implements OnInit {
   protected _deleteDemo(demo: DemoDto) {
     this.swal.fire({
       title: 'Bạn có chắc chắn không?',
-      text: 'Demo ' + demo.ma + ' sẽ bị xóa!',
+      text: 'Demo ' + demo.ma + ' sẽ bị Delete!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: this.confirmButtonColor,

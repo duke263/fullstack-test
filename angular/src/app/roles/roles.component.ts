@@ -49,7 +49,7 @@ export class RolesComponent extends AppComponentBase {
   delete(role: RoleDto): void {
     this.swal.fire({
       title: 'Bạn chắc chắn không?',
-      text: 'Vai trò ' + role.displayName + ' sẽ bị xóa.',
+      text: 'Vai trò ' + role.displayName + ' sẽ bị Delete.',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: this.confirmButtonColor,

@@ -109,7 +109,7 @@ export class CreateOrEditDemoDialogComponent extends AppComponentBase
                 }
             }, 500);
             if (!this.id) {
-                // Thêm mới
+                // Add
                 this.demoDto = new DemoCreateInput();
                 this.isEdit = false;
                 this.treeViewCheckboxItems = { data: this.treeViewCheckbox, selected: [], disabled: false }

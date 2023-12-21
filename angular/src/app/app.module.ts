@@ -17,17 +17,6 @@ import { AboutComponent } from '@app/about/about.component';
 
 import {FullCalendarModule} from 'primeng/fullcalendar';
 import {CalendarModule} from 'primeng/calendar';
-// import dayGridPlugin from '@fullcalendar/daygrid';
-// import timeGridPlugin from '@fullcalendar/timegrid';
-// import interactionPlugin from '@fullcalendar/interaction';
-
-// FullCalendarModule.registerPlugins([
-//   dayGridPlugin,
-//   timeGridPlugin,
-//   interactionPlugin
-// ]);
-
-
 // tenants
 import { TenantsComponent } from '@app/tenants/tenants.component';
 import { CreateTenantDialogComponent } from './tenants/create-tenant/create-tenant-dialog.component';

@@ -3,12 +3,12 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-6">
-                    <h1>Danh sách Vai trò</h1>
+                    <h1>Role Master</h1>
                 </div>
                 <div class="col-6 text-right">
                     <button type="button" class="btn btn-primary m-r-5" (click)="createRole()">
                         <i class="fa fa-plus"></i>
-                        <span style="margin-left: 5px;">Thêm mới</span></button>
+                        <span style="margin-left: 5px;">Add</span></button>
                 </div>
             </div>
         </div>
@@ -23,19 +23,19 @@
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
-                        <input type="text" class="form-control" name="keyword" [placeholder]="'Nhập tên vai trò'" [(ngModel)]="keyword" (keyup.enter)="getDataPage()" />
+                        <input type="text" class="form-control" name="keyword" [placeholder]="'Search for Role Name'" [(ngModel)]="keyword" (keyup.enter)="getDataPage()" />
                     </div>
                 </div>
                 <div>
-                    <p-table #dt [value]="roles" [lazy]="true" (onLazyLoad)="getDataPage($event)" [paginator]="paginator" [loading]="loading" [showCurrentPageReport]="true" currentPageReportTemplate="{{totalCount==0?'':' Hiển thị: {first}-{last}/{totalRecords}'}} " [rows]="paginatorRows"
+                    <p-table #dt [value]="roles" [lazy]="true" (onLazyLoad)="getDataPage($event)" [paginator]="paginator" [loading]="loading" [showCurrentPageReport]="true" currentPageReportTemplate="{{totalCount==0?'':' Showing {first} to {last} of {totalRecords} entries'}} " [rows]="paginatorRows"
                         [totalRecords]="totalCount" [rowsPerPageOptions]="rowsPerPageOptions" [scrollable]="scrollable" scrollHeight="{{scrollHeight}}">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th class="width-30"></th>
-                                <th class="width-150" pSortableColumn="name">Tên vai trò
+                                <th class="width-150" pSortableColumn="name">Roles
                                     <p-sortIcon field="name"></p-sortIcon>
                                 </th>
-                                <th class="width-150" pSortableColumn="displayName">Tên hiển thị
+                                <th class="width-150" pSortableColumn="displayName">Display Name
                                     <p-sortIcon field="displayName"></p-sortIcon>
                                 </th>
                             </tr>
@@ -48,10 +48,9 @@
                                             <i class="fas fa-ellipsis-v"></i>
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" (click)="editRole(record)">Cập
-                                                nhật</a>
-                                            <a class="dropdown-item" (click)="editRole(record,true)">Phân quyền</a>
-                                            <a class="dropdown-item" (click)="delete(record)">Xóa</a>
+                                            <a class="dropdown-item" (click)="editRole(record)">Edit</a>
+                                            <a class="dropdown-item" (click)="editRole(record,true)">Permission</a>
+                                            <a class="dropdown-item" (click)="delete(record)">Delete</a>
                                         </div>
                                     </div>
                                 </td>

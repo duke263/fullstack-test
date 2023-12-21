@@ -1,12 +1,12 @@
 <form [formGroup]="form" class="form-horizontal" autocomplete="off" #createUserModal="ngForm" (ngSubmit)="save()">
-    <abp-modal-header [title]="'Thêm mới Người dùng'" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+    <abp-modal-header [title]="'Add User'" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
     <div class="modal-body fixed-modal-height">
         <p-tabView>
-            <p-tabPanel header="Thông tin chung">
+            <p-tabPanel header="Information">
                 <div class="row ui-fluid">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <dft-label-validation [control]="form.get('HoTen')" [title]="'Họ tên *'">
+                            <dft-label-validation [control]="form.get('HoTen')" [title]="'Full Name *'">
                             </dft-label-validation>
                             <input formControlName="HoTen" type="text" class="form-control" name="HoTen" id="HoTen" maxlength="64" />
                             <dft-validation [control]="form.get('HoTen')"></dft-validation>
@@ -14,7 +14,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <dft-label-validation [control]="form.get('TenDangNhap')" [title]="'Tên đăng nhập *'">
+                            <dft-label-validation [control]="form.get('TenDangNhap')" [title]="'User Name *'">
                             </dft-label-validation>
                             <input formControlName="TenDangNhap" type="text" class="form-control" name="TenDangNhap" id="TenDangNhap" minlength="2" maxlength="32" />
                             <dft-validation [control]="form.get('TenDangNhap')"></dft-validation>
@@ -25,7 +25,7 @@
                 <div class="row ui-fluid">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <dft-label-validation [control]="form.get('EmailAdress')" [title]="'Địa chỉ Email *'">
+                            <dft-label-validation [control]="form.get('EmailAdress')" [title]="'Email *'">
                             </dft-label-validation>
                             <input formControlName="EmailAdress" class="form-control" maxlength="256" name="abc" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$" />
                             <dft-validation [control]="form.get('EmailAdress')"></dft-validation>
@@ -33,7 +33,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <dft-label-validation [control]="form.get('SoDienThoai')" [title]="'SĐT'">
+                            <dft-label-validation [control]="form.get('SoDienThoai')" [title]="'Phone Number'">
                             </dft-label-validation>
                             <input formControlName="SoDienThoai" type="text" class="form-control" name="SoDienThoai" id="SoDienThoai" maxlength="15" />
                             <dft-validation [control]="form.get('SoDienThoai')"></dft-validation>
@@ -44,7 +44,7 @@
                 <div class="row ui-fluid">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <dft-label-validation [control]="form.get('MatKhau')" [title]="'Mật khẩu *'">
+                            <dft-label-validation [control]="form.get('MatKhau')" [title]="'Password *'">
                             </dft-label-validation>
                             <input formControlName="MatKhau" type="password" class="form-control" name="MatKhau" id="MatKhau" minlength="6" maxlength="32" />
                             <abp-validation-summary [control]="form.get('MatKhau')">
@@ -53,7 +53,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <dft-label-validation [control]="form.get('XacNhanMatKhau')" [title]="'Xác nhận mật khẩu *'">
+                            <dft-label-validation [control]="form.get('XacNhanMatKhau')" [title]="'Confirm Password *'">
                             </dft-label-validation>
                             <input formControlName="XacNhanMatKhau" type="password" class="form-control" name="XacNhanMatKhau" id="XacNhanMatKhau" minlength="6" maxlength="32" />
                             <abp-validation-summary [control]="form.get('XacNhanMatKhau')">
@@ -65,7 +65,7 @@
                 <div class="row ui-fluid">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <dft-label-validation [control]="form.get('TinhTrang')" [title]="'Kích hoạt'">
+                            <dft-label-validation [control]="form.get('TinhTrang')" [title]="'Status'">
                             </dft-label-validation>
                             <br>
                             <p-inputSwitch formControlName="TinhTrang" name="isActive"></p-inputSwitch>
@@ -76,7 +76,7 @@
                 <div class="row ui-fluid">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <dft-label-validation [form]="form" [title]="'Ghi chú'">
+                            <dft-label-validation [form]="form" [title]="'Note'">
                             </dft-label-validation>
                             <br>
                             <textarea formControlName="GhiChu" class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
@@ -84,7 +84,7 @@
                     </div>
                 </div>
             </p-tabPanel>
-            <p-tabPanel header="Vai trò">
+            <p-tabPanel header="Permission">
                 <div class="form-group row mb-0">
                     <ng-container *ngFor="let role of roles; let i = index">
                         <div class="col-md-6">

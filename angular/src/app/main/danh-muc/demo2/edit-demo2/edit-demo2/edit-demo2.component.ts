@@ -81,9 +81,9 @@ export class EditDemo2Component extends AppComponentBase implements OnInit {
   private _setValueForEdit() {
     // this.form.controls.id.setValue(this.staff.id);
     this.form.controls.Ma.setValue(this.staff.ma);
-    this.form.controls.Name.setValue(this.staff.name)
-    this.form.controls.Address.setValue(this.staff.address)
-    this.form.controls.Email.setValue(this.staff.email)
+    this.form.controls.Name.setValue(this.staff.name);
+    this.form.controls.Address.setValue(this.staff.address);
+    this.form.controls.Email.setValue(this.staff.email);
     if (this.isView) {
       this.form.disable();
     }

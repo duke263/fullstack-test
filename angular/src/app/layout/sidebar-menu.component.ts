@@ -35,33 +35,37 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
 
   ngOnInit(): void {
     this.items = [
+      // {
+      //   label: 'Demo',
+      //   routerLink: '/app/main/danh-muc/demo',
+      // },
+      // {
+      //   label: 'Quản lý nhân viên',
+      //   routerLink: '/app/main/danh-muc/demo2',
+      // },
       {
-        label: 'Demo',
-        routerLink: '/app/main/danh-muc/demo',
+        label: 'Product',
+        routerLink: '/app/main/danh-muc/product-asset',
       },
       {
-        label: 'Quản lý nhân viên',
-        routerLink: '/app/main/danh-muc/demo2',
-      },
-      {
-        label: 'Quản lý Hệ thống', icon: 'fas fa-users',
+        label: 'System Management', icon: 'fas fa-users',
         items: [
           [
             {
-              label: 'Quản lý Hệ thống',
+              label: 'System Management',
               items: [
                 {
-                  label: 'Quản lý Người dùng',
+                  label: 'User Management',
                   routerLink: '/app/users',
                   visible: this.isGranted('Pages.Users')
                 },
                 {
-                  label: 'Quản lý Phân quyền',
+                  label: 'Role Management',
                   routerLink: '/app/roles',
                   visible: this.isGranted('Pages.Roles')
                 },
                 {
-                  label: 'Lịch sử Người dùng',
+                  label: 'History Management',
                   routerLink: '/app/auditLogs',
                   visible: this.isGranted('Pages.QuanLyLichSuNguoiDung')
                 },
@@ -106,14 +110,15 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
 
   getMenuItems(): MenuItem[] {
     return [
-      new MenuItem('Demo', '/app/main/danh-muc/demo', 'fas fa-cubes'),
-      new MenuItem('Quản lý nhân viên', '/app/main/danh-muc/demo2', 'fas fa-user'),
-      new MenuItem('Quản lý Hệ thống', '', 'fas fa-users',
+      // new MenuItem('Demo', '/app/main/danh-muc/demo', 'fas fa-cubes'),
+      // new MenuItem('Quản lý nhân viên', '/app/main/danh-muc/demo2', 'fas fa-user'),
+      new MenuItem('Product', '/app/main/danh-muc/product-asset', 'fas fa-user'),
+      new MenuItem('System Management', '', 'fas fa-users',
         this.getPermission('Pages.Users', 'Pages.Roles', 'Pages.QuanLyLichSuNguoiDung', 'Pages.QuanLyMailServer'),
         [
-          new MenuItem('Quản lý Người dùng', '/app/users', '', 'Pages.Users'),
-          new MenuItem('Quản lý Phân quyền', '/app/roles', '', 'Pages.Roles'),
-          new MenuItem('Lịch sử Người dùng', '/app/auditLogs', '', 'Pages.QuanLyLichSuNguoiDung'),
+          new MenuItem('User Management', '/app/users', '', 'Pages.Users'),
+          new MenuItem('Role Management', '/app/roles', '', 'Pages.Roles'),
+          new MenuItem('History Management', '/app/auditLogs', '', 'Pages.QuanLyLichSuNguoiDung'),
           new MenuItem('Quản lý Mail Server', '/app/main/cau-hinh-mail-server', '', 'Pages.QuanLyMailServer'),
         ]),
     ];

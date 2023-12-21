@@ -1,5 +1,5 @@
 <form [formGroup]="form" class="form-horizontal" autocomplete="off" #createUserModal="ngForm" (ngSubmit)="save()">
-    <abp-modal-header [title]="id ?( isView ? 'Xem chi tiết: '+ demoDto.ten : 'Cập nhật: '+ demoDto.ten ): 'Thêm mới Demo'" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+    <abp-modal-header [title]="id ?( isView ? 'Xem chi tiết: '+ demoDto.ten : 'Cập nhật: '+ demoDto.ten ): 'Add Demo'" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
     <div class="modal-body fixed-modal-height">
         <p-accordion [multiple]="true">
             <!-- Textbox Start -->
@@ -400,6 +400,6 @@
             <!-- UploadFile End -->
         </p-accordion>
     </div>
-    <abp-modal-footer [saveHidden]="isView" [cancelLabel]="isView?'Đóng':'Hủy'" [cancelDisabled]="saving" (onCancelClick)="close()">
+    <abp-modal-footer [saveHidden]="isView" [cancelLabel]="isView?'Close':'Cancel'" [cancelDisabled]="saving" (onCancelClick)="close()">
     </abp-modal-footer>
 </form>

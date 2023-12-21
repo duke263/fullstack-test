@@ -1,12 +1,12 @@
 <form [formGroup]="form" class="form-horizontal" autocomplete="off" #editRoleForm="ngForm" (ngSubmit)="save()">
-    <abp-modal-header [title]="'Cập nhật: '+role.name" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+    <abp-modal-header [title]="'Edit: '+role.name" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
     <div class="modal-body">
         <p-tabView>
-            <p-tabPanel header="Tên vai trò" [selected]="!isPermissionActive">
+            <p-tabPanel header="Information" [selected]="!isPermissionActive">
                 <div class="row ui-fluid">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <dft-label-validation [control]="form.get('TenVaiTro')" [title]="'Tên vai trò *'">
+                            <dft-label-validation [control]="form.get('TenVaiTro')" [title]="'Role Name *'">
                             </dft-label-validation>
                             <input formControlName="TenVaiTro" type="text" class="form-control" name="TenVaiTro" id="TenVaiTro" maxlength="32" />
                             <dft-validation [control]="form.get('TenVaiTro')"></dft-validation>
@@ -14,7 +14,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <dft-label-validation [control]="form.get('TenHienThi')" [title]="'Tên hiển thị *'">
+                            <dft-label-validation [control]="form.get('TenHienThi')" [title]="'Display Name *'">
                             </dft-label-validation>
                             <input formControlName="TenHienThi" type="text" class="form-control" name="TenHienThi" id="TenHienThi" maxlength="32" />
                             <dft-validation [control]="form.get('TenHienThi')"></dft-validation>
@@ -25,7 +25,7 @@
                 <div class="row ui-fluid">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <dft-label-validation [form]="form" [title]="'Ghi chú'">
+                            <dft-label-validation [form]="form" [title]="'Note'">
                             </dft-label-validation>
                             <br>
                             <textarea formControlName="GhiChu" class="form-control" id="GhiChu" rows="4"></textarea>
@@ -33,7 +33,7 @@
                     </div>
                 </div>
             </p-tabPanel>
-            <p-tabPanel header="Phân quyền" [selected]="isPermissionActive">
+            <p-tabPanel header="Permissions" [selected]="isPermissionActive">
                 <div class="form-group row mb-0">
                     <permission-tree #permissionTree (onSelectedChange)="permissionChecked=$event"></permission-tree>
                 </div>
