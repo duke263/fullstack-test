@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyProject.EntityFrameworkCore;
 
 namespace MyProject.Migrations
 {
     [DbContext(typeof(MyProjectDbContext))]
-    partial class MyProjectDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231220092840_kko")]
+    partial class kko
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

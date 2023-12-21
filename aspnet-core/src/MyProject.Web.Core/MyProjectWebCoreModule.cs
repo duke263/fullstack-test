@@ -88,12 +88,16 @@ namespace MyProject
 
             // Folder chứ file mẫu cho phần import Demo
             appFolders.DemoFileDownloadFolder = Path.Combine(_env.WebRootPath, $"Temp{Path.DirectorySeparatorChar}Downloads{Path.DirectorySeparatorChar}Imports{Path.DirectorySeparatorChar}Demo");
-
+            //Product
+            appFolders.ProductFileDownloadFolder = Path.Combine(_env.WebRootPath, $"Temp{Path.DirectorySeparatorChar}Downloads{Path.DirectorySeparatorChar}Imports{Path.DirectorySeparatorChar}Product");
+            appFolders.ProductFileUploadFolder = Path.Combine(_env.WebRootPath, $"Upload{Path.DirectorySeparatorChar}ProductUpload");
             try
             {
                 DirectoryHelper.CreateIfNotExists(appFolders.TempFileDownloadFolder);
                 DirectoryHelper.CreateIfNotExists(appFolders.DemoUploadFolder);
                 DirectoryHelper.CreateIfNotExists(appFolders.DemoFileDownloadFolder);
+                DirectoryHelper.CreateIfNotExists(appFolders.ProductFileDownloadFolder);
+                DirectoryHelper.CreateIfNotExists(appFolders.ProductFileUploadFolder);
             }
             catch { }
         }

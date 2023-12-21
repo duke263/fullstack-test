@@ -7,5 +7,9 @@ namespace MyProject
         string DemoUploadFolder { get; }
 
         string DemoFileDownloadFolder { get; }
+
+        public string ProductFileDownloadFolder { get; set; }
+
+        public string ProductFileUploadFolder { get; set; }
     }
 }

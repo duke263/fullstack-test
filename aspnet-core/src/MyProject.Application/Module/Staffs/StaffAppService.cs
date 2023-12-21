@@ -17,8 +17,9 @@
     using MyProject.DanhMuc.Staffs.Stos;
     using MyProject.Data;
     using MyProject.Global;
+    using MyProject.Module.Staffs.Stos;
 
-    public class StaffAppService : MyProjectAppServiceBase, IStaffAppService
+    public class StaffAppService : MyProjectAppServiceBase
     {
         private readonly IRepository<Staff> staffRepository;
         private readonly IAppFolders appFolders;

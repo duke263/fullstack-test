@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyProject.EntityFrameworkCore;
 
 namespace MyProject.Migrations
 {
     [DbContext(typeof(MyProjectDbContext))]
-    partial class MyProjectDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231220092732_product")]
+    partial class product
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1482,57 +1484,6 @@ namespace MyProject.Migrations
                     b.HasIndex("DemoId");
 
                     b.ToTable("Demo_File");
-                });
-
-            modelBuilder.Entity("DbEntities.Product_File", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("CreatorUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("DeleterUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("GhiChu")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("LastModifierUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("LinkFile")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("LoaiFile")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NameFile")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProductId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("TenantId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Product_File");
                 });
 
             modelBuilder.Entity("DbEntities.Products", b =>

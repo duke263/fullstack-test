@@ -16,6 +16,8 @@ namespace MyProject.EntityFrameworkCore
         public DbSet<Demo> Demo { get; set; }
         public DbSet<TreeView> TreeView { get; set; }
         public DbSet<Staff> Staff { get; set; }
+        public DbSet<Products> Products { get; set; }
+        public DbSet<Product_File> Product_File { get; set; }
         public MyProjectDbContext(DbContextOptions<MyProjectDbContext> options)
             : base(options)
         {

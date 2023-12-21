@@ -1,6 +1,6 @@
 ﻿using Abp.Application.Services.Dto;
 
-namespace MyProject.DanhMuc.Staffs.Stos
+namespace MyProject.Module.Staffs.Stos
 {
     public class StaffGetAllInputSto : PagedResultRequestDto
     {
