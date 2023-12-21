@@ -24,6 +24,13 @@
             return await this.Upload(fileFolderPath);
         }
 
+        [HttpPost]
+        public async Task<List<string>> ProductUpload()
+        {
+            string fileFolderPath = Path.Combine(this.appFolders.ProductFileUploadFolder + Path.DirectorySeparatorChar + string.Format("{0:yyyyMMdd_hhmmss}", DateTime.Now));
+            return await this.Upload(fileFolderPath);
+        }
+
         private async Task<List<string>> Upload(string fileFolderPath)
         {
             List<string> result = new List<string>();

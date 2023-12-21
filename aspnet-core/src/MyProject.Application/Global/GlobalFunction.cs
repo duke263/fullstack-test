@@ -28,8 +28,29 @@ using System.Threading.Tasks;
 
 namespace MyProject.Global
 {
-    public class GlobalFunction
+    public static class GlobalFunction
     {
+        /// <summary>
+        /// Check parameter.
+        /// </summary>
+        /// <param name="obj">object.</param>
+        /// <param name="condition">condition.</param>
+        /// <param name="message">message.</param>
+        public static void Assert(this object obj, bool condition, string message)
+        {
+            if (condition)
+            {
+                throw new UserFriendlyException(message);
+            }
+        }
+
+        public static void AssertDetails(this object obj, bool condition, string message)
+        {
+            if (condition)
+            {
+                throw new UserFriendlyException(message, message);
+            }
+        }
         public static IAppFolders AppFolders { get; set; }
 
         public static DateTime? GetDateTime(DateTime? dateTime)

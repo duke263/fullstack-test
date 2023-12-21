@@ -34,6 +34,7 @@
     using Microsoft.Extensions.Configuration;
     using MyProject.Module.Products.Dtos;
     using MyProject.DanhMuc.Staffs.Stos;
+    using System.Data;
 
     [AbpAuthorize]
     public class ProductsAssetService : MyProjectAppServiceBase
@@ -199,7 +200,7 @@
 
         public async Task<FileDto> DownloadFileMau()
         {
-            string fileName = string.Format("ProductImport.xlsx");
+            string fileName = string.Format("Import_Product.xlsx");
             try
             {
                 // _appFolders.DemoFileDownloadFolder : Thư mục chưa file mẫu cần tải
@@ -299,6 +300,152 @@
 
         }
 
+        public async Task<string> ImportFileExcel(string filePath)
+        {
+            StringBuilder returnMessage = new StringBuilder();
+            returnMessage.Append("Kết quả nhập file:");
+            string error = string.Empty;
+            filePath = Path.Combine(_env.WebRootPath, filePath);
+            //var maxAllow = this.configurationApp.GetValue<int>("Config4App:MaxImport");
+            ReadFromExcelDto<CreateInputDto> readResult = new ReadFromExcelDto<CreateInputDto>();
+
+            var productAll = new List<CreateInputDto>();
+
+            IDictionary<int, List<int>> dataCheck = new Dictionary<int, List<int>>();
+
+            IDictionary<int, string> errorMessages = new Dictionary<int, string>();
+
+            errorMessages.Add(1, "Product does exist in the system");
+            errorMessages.Add(2, "Product can't be left blank");
+            errorMessages.Add(3, "Product exceeds 255 characters");
+
+            foreach (var item in errorMessages)
+            {
+                dataCheck.Add(item.Key, new List<int>());
+            }
+
+            // Không tìm thấy file
+            if (!System.IO.File.Exists(filePath))
+            {
+                readResult.ResultCode = (int)GlobalConst.ReadExcelResultCodeConst.FileNotFound;
+            }
+
+            // Đọc hết file excel
+            var rowStartRead = 2;
+            var data = ReadAndRemoveFileAddNew(filePath, "Import_PRODUCT", rowStartRead);
+
+            //var data = allData.Where(record => record.Any(value => !string.IsNullOrEmpty(value))).ToList();
+
+            // Không có dữ liệu
+            if (data.Count <= 0)
+            {
+                readResult.ResultCode = (int)GlobalConst.ReadExcelResultCodeConst.CantReadData;
+                this.Assert(true, "Nội dung file không đúng quy định");
+            }
+            //else if (data.Count > maxAllow)
+            //{
+            //    readResult.ResultCode = (int)GlobalConst.ReadExcelResultCodeConst.CantReadData;
+            //    this.Assert(true, "Số lượng bản ghi không vượt quá 10.000");
+            //}
+            //else if (data[0].Count != 5)
+            //{
+            //    readResult.ResultCode = (int)GlobalConst.ReadExcelResultCodeConst.CantReadData;
+            //    this.Assert(true, "Nội dung file không đúng quy định");
+            //}
+            else
+            {
+                var productRes = await this.productRepository.GetAll().ToDictionaryAsync(e => e.ProductName, e => e);
+                for (int i = 0; i < data.Count; i++)
+                {
+                    try
+                    {
+                        string productName = GlobalFunction.RegexFormat(data[i][0]);
+                        string price = GlobalFunction.RegexFormat(data[i][1]);
+                        string category = GlobalFunction.RegexFormat(data[i][2]);
+                        string description = GlobalFunction.RegexFormat(data[i][3]);
+
+                        var isError = false;
+
+                        if (string.IsNullOrEmpty(productName))
+                        {
+                            isError = true;
+                            dataCheck[2].Add(i + 2);
+                        }
+                        else
+                        {
+                            var checkProduct = productRes.ContainsKey(productName);
+                            var checkProductFile = productAll.Any(e => e.ProductName.Equals(productName));
+                            if (productName.Length > 255)
+                            {
+                                isError = true;
+                                dataCheck[3].Add(i + 2);
+                            }
+                            if (checkProduct || checkProductFile)
+                            {
+                                isError = true;
+                                dataCheck[1].Add(i + 2);
+                            }
+                        }
+
+                        if (isError)
+                        {
+                            // Đánh dấu các bản ghi lỗi
+                            readResult.ListErrorRow.Add(data[i]);
+                            readResult.ListErrorRowIndex.Add(i + 1);
+                        }
+                        else
+                        {
+                            var create = new CreateInputDto();
+                            create.ProductName = productName.Trim();
+                            create.Price = double.Parse(price);
+                            create.Category = category;
+                            create.Description = description;
+
+                            // Đánh dấu các bản ghi thêm thành công
+                            readResult.ListResult.Add(create);
+                            productAll.Add(create);
+                        }
+                        rowStartRead++;
+                    }
+                    catch (Exception e)
+                    {
+
+                        throw e;
+                    }
+                }
+                if (productAll.Count > 0)
+                {
+                    await this.InsertBulkForAsset(productAll);
+                }
+            }
+
+            // Thông tin import
+            readResult.ErrorMessage = GlobalModel.ReadExcelResultCodeSorted[readResult.ResultCode];
+
+            // Nếu đọc file thất bại
+            if (readResult.ResultCode != 200)
+            {
+                return readResult.ErrorMessage;
+            }
+            else
+            {
+                // Đọc file thành công
+                // Trả kết quả import
+                returnMessage.Append(string.Format("\r\n\u00A0- Total records: {0}", readResult.ListResult.Count + readResult.ListErrorRow.Count));
+                returnMessage.Append(string.Format("\r\n\u00A0- Number of successful records: {0}", readResult.ListResult.Count));
+                returnMessage.Append(string.Format("\r\n\u00A0- Number of failed records: {0}", readResult.ListErrorRow.Count));
+                if (dataCheck.Any(a => a.Value.Any()))
+                {
+                    foreach (var item in dataCheck.Where(s => s.Value.Any()))
+                    {
+                        returnMessage.Append("\r\n\u00A0- " + errorMessages[item.Key] + ": Dòng " + string.Join(", ", item.Value));
+                    }
+                }
+            }
+
+            return returnMessage.ToString();
+        }
+
         private List<List<string>> ReadAndRemoveFileAddNew(string FilePath, string SheetName, int startRowIndex = 1)
         {
             List<List<string>> ouput = new List<List<string>>();
@@ -341,6 +488,64 @@
             }
 
             return databaseName;
+        }
+
+        private async Task InsertBulkForAsset(List<CreateInputDto> productAlls)
+        {
+            try
+            {
+                var ghiChuValue = $"Imported_{DateTime.Now:ddMMyyyy_HHmm}";
+
+                if (productAlls.Count() > 0)
+                {
+                    // Create a DataTable with your data
+                    DataTable dataTable = new DataTable();
+                    // Add columns to the DataTable 
+                    dataTable.Columns.Add("TenantId", typeof(int));
+                    dataTable.Columns.Add("Id", typeof(int));
+                    dataTable.Columns.Add("ProductName", typeof(string));
+                    dataTable.Columns.Add("Price", typeof(double));
+                    dataTable.Columns.Add("Category", typeof(string));
+                    dataTable.Columns.Add("Description", typeof(string));
+                    dataTable.Columns.Add("CreationTime", typeof(DateTime));
+                    dataTable.Columns.Add("IsDeleted", typeof(bool));
+
+                    productAlls.ForEach(fc =>
+                    {
+                        dataTable.Rows.Add(1, fc.Id, fc.ProductName, fc.Price, fc.Category,fc.Description, DateTime.Now, false);
+                    });
+
+
+                    using (SqlConnection connection = new SqlConnection(this.connectionString))
+                    {
+                        await connection.OpenAsync();
+
+                        using (SqlBulkCopy bulkCopy = new SqlBulkCopy(connection))
+                        {
+                            bulkCopy.DestinationTableName = this.ProductDatabase;
+                            bulkCopy.ColumnMappings.Add("TenantId", "TenantId");
+                            bulkCopy.ColumnMappings.Add("ProductName", "ProductName");
+                            bulkCopy.ColumnMappings.Add("Price", "Price");
+                            bulkCopy.ColumnMappings.Add("Category", "Category");
+                            bulkCopy.ColumnMappings.Add("Description", "Description");
+                            bulkCopy.ColumnMappings.Add("CreationTime", "CreationTime");
+                            bulkCopy.ColumnMappings.Add("IsDeleted", "IsDeleted");
+
+
+                            bulkCopy.WriteToServer(dataTable);
+                        }
+
+                        await connection.CloseAsync();
+                    }
+                }
+                await this.CurrentUnitOfWork.SaveChangesAsync();
+
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
         }
     }
 }
